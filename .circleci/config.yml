@@ -79,7 +79,7 @@ jobs:
       # Your job code here
       - run:
           name: Run Frontend Test
-          command:
+          command: |
             cd frontend
             npm install
             npm run test
@@ -113,7 +113,7 @@ jobs:
       # Your job code here
       - run:
           name: Scan Frontend
-          command:
+          command: |
             cd frontend
             npm install
             npm audit fix --audit-level-critical
@@ -130,7 +130,7 @@ jobs:
       # Your job code here
       - run:
           name: Scan Backend
-          command:
+          command: |
             cd backend
             npm install
             npm audit fix --audit-level-critical
