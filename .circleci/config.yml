@@ -96,7 +96,7 @@ jobs:
       # Your job code here
       - run:
           name: Run Backend Test
-          command:
+          command: |
             cd backend
             npm install
             npm run test
