@@ -22,7 +22,7 @@
       # Your code here
       apt:
         name: python3
-        status: latest
+        state: latest
         update_cache: yes
       
 
