@@ -4,7 +4,7 @@
   apt:
     update_cache: yes
      
-- name: "upgrade apt packages" I
+- name: "upgrade apt packages"
   become: true
   apt:
     upgrade: yes
@@ -17,7 +17,7 @@
 - name: "install dependencies [ nodejs and npm ]."
   become: true
   apt:
-     name: [ "nodejs" , "npm" ]
+     name: [ "nodejs", "npm" ]
      state: latest
      update_cache: yes
 
