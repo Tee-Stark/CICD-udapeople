@@ -420,8 +420,8 @@ jobs:
           command: |
             aws cloudformation deploy \
               --template-file .circleci/files/cloudfront.yml \
-              --stack-name InitialStack \
-              --parameter-overrides WorkflowID="udapeople-${}CIRCLE_WORKFLOW_ID:0:7"
+              --stack-name init-stack \
+              --parameter-overrides WorkflowID="udapeople-${CIRCLE_WORKFLOW_ID:0:7}"
             echo OldWorkflowID: $(cat ~/project/OldWorkflowID.txt)
             echo CurrentWorkflowID: "${CIRCLE_WORKFLOW_ID:0:7}"
       # Here's where you will add some code to rollback on failure  
