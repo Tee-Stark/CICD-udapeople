@@ -1,0 +1,55 @@
+---
+- name: "update local apt repo."
+  become: true
+  apt:
+    update_cache: yes
+     
+- name: "upgrade apt packages"
+  become: true
+  apt:
+    upgrade: yes
+ 
+- name: "remove stale dependencies"
+  become: true
+  apt:
+     autoremove: yes
+
+- name: "add Node.js from Nodesource"
+  become: true
+  shell: |
+    curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+
+- name: "install dependency [ nodejs ]."
+  become: true
+  apt:
+     name: [ "nodejs" ]
+     state: latest
+     update_cache: yes
+
+- name: "install pm2"
+  become: true
+  npm:
+    name: pm2
+    global: yes
+    production: yes
+
+- name: Create Backend Directory
+  file:
+    path: ~/backend_app_dir
+    state: directory
+    
+- name: Copy artifact into instance
+  become: true
+  copy:
+    src: ~/project/artifact.tar.gz
+    dest: /home/ubuntu/backend_app_dir/artifact.tar.gz
+    
+- name: Start app
+  become: true
+  shell: |
+    cd /home/ubuntu/backend_app_dir
+    tar xzvf artifact.tar.gz
+    npm install
+    npm run build
+    pm2 stop all
+    pm2 start npm -- start
