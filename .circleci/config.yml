@@ -29,7 +29,7 @@ commands:
           when: on_fail
           command: |
             echo "Revert migrations started..."
-            SUCCESS=$(curl --insecure --request GET httpshttps://kvdb.io/LVN6aWVef7mZDYUvQ81B9P/migration_<<parameters.workflow_id>>)
+            SUCCESS=$(curl --insecure --request GET https://kvdb.io/LVN6aWVef7mZDYUvQ81B9P/migration_<<parameters.workflow_id>>)
             if(( $SUCCESS==1 )); 
             then
               cd ~/project/backend
@@ -246,8 +246,6 @@ jobs:
     steps:
       # Checkout code from git
       - checkout
-      - attach_workspace:
-          at: ~/
       - run:
           name: Install dependencies
           command: |
@@ -257,6 +255,8 @@ jobs:
             apk add --update --no-cache npm
             apk add --update --no-cache aws-cli
             apk add --update --no-cache curl
+      - attach_workspace:
+          at: ~/
       - run:
           name: Get backend url
           command: |
