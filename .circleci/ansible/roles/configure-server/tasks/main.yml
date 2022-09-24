@@ -14,10 +14,15 @@
   apt:
      autoremove: yes
 
-- name: "install dependencies [ nodejs and npm ]."
+- name: "add Node.js from Nodesource"
+  become: true
+  shell: |
+    curl -sL https://deb.nodesource.com/setup_13.x | sudo -E bash -
+
+- name: "install dependency [ nodejs ]."
   become: true
   apt:
-     name: [ "nodejs", "npm" ]
+     name: [ "nodejs" ]
      state: latest
      update_cache: yes
 
@@ -27,4 +32,3 @@
     name: pm2
     global: yes
     production: yes
-    state: present
