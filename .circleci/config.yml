@@ -368,7 +368,7 @@ jobs:
       - run:
           name: Backend smoke test.
           command: |
-            export API_UTL="http://${BACKEND_IP}:3030"
+            export API_URL="http://${BACKEND_IP}:3030"
             echo "API_URL=${API_URL}"
             
             echo "Sleeping for one minute"
