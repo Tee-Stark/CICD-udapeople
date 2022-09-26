@@ -99,11 +99,11 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - failure_notify
+      - failure_notify:
           context: slack
-      - success_notify
+      - success_notify:
           context: slack
-      - deploy_notify
+      - deploy_notify:
           context: slack
 
   test-frontend:
@@ -133,10 +133,12 @@ jobs:
             cd backend
             npm install
             npm run test
-                      
-      - failure_notify
-      - success_notify
-      - deploy_notify
+      - failure_notify:
+          context: slack
+      - success_notify:
+          context: slack
+      - deploy_notify:
+          context: slack
             
   scan-frontend:
     docker:
@@ -151,11 +153,11 @@ jobs:
             cd frontend
             npm install
             npm audit fix --audit-level-critical
-      - failure_notify
+      - failure_notify:
           context: slack
-      - success_notify
+      - success_notify:
           context: slack
-      - deploy_notify
+      - deploy_notify:
           context: slack
 
   scan-backend:
