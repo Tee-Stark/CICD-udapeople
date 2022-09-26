@@ -77,8 +77,11 @@ jobs:
           paths: [frontend/node_modules]
           key: frontend-build
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   build-backend:
     docker:
@@ -96,10 +99,12 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   test-frontend:
     docker:
@@ -146,10 +151,12 @@ jobs:
             cd frontend
             npm install
             npm audit fix --audit-level-critical
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   scan-backend:
     docker:
@@ -164,10 +171,12 @@ jobs:
             cd backend
             npm install
             npm audit fix --audit-level-critical
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   deploy-infrastructure:
     docker:
@@ -205,10 +214,12 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   configure-infrastructure:
     docker:
@@ -234,10 +245,12 @@ jobs:
           no_output_timeout: 30m
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   run-migrations:
     docker:
@@ -265,10 +278,12 @@ jobs:
             fi
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
- 
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   deploy-frontend:
     docker:
@@ -309,10 +324,12 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
                     
   deploy-backend:
     docker:
@@ -367,10 +384,12 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   smoke-test:
     docker:
@@ -418,10 +437,12 @@ jobs:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   cloudfront-update:
     docker:
@@ -454,10 +475,12 @@ jobs:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
 
   cleanup:
     docker:
@@ -493,10 +516,12 @@ jobs:
             else
               echo "Stack is the latest"
             fi
-                      
       - failure_notify
+          context: slack
       - success_notify
+          context: slack
       - deploy_notify
+          context: slack
             
 workflows:
   default:
