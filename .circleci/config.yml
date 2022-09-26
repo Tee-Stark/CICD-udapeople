@@ -76,11 +76,11 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - failure_notify
+      - failure_notify:
           context: slack
-      - success_notify
+      - success_notify:
           context: slack
-      - deploy_notify
+      - deploy_notify:
           context: slack
 
   build-backend:
