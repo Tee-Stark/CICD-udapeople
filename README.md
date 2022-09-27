@@ -2,6 +2,9 @@
 In this project, I setup a CI/CD pipeline to auto-deploy a React/Nestjs application to AWS using CircleCi and Ansible. I configure alerts to a slack channel to notify the team on successful or failed builds.
 I also configure Prometheus as a tool for logging and monitoring, with alert-manager on the side to send critical alert errors to my email.
 
+### Working Application UI
+![Udapeople UI](./img/Working_Application.png)
+
 ### Relevant links (temporary):
 
 - Production Frontend URL: [http://d1ay69k43k8yae.cloudfront.net](http://d1ay69k43k8yae.cloudfront.net)
