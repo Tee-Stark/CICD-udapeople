@@ -76,12 +76,9 @@ jobs:
       - save_cache:
           paths: [frontend/node_modules]
           key: frontend-build
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   build-backend:
     docker:
@@ -99,12 +96,9 @@ jobs:
       - save_cache:
           paths: [backend/node_modules]
           key: backend-build
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   test-frontend:
     docker:
@@ -133,12 +127,9 @@ jobs:
             cd backend
             npm install
             npm run test
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
             
   scan-frontend:
     docker:
@@ -153,12 +144,9 @@ jobs:
             cd frontend
             npm install
             npm audit fix --audit-level-critical
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   scan-backend:
     docker:
@@ -173,12 +161,9 @@ jobs:
             cd backend
             npm install
             npm audit fix --audit-level-critical
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   deploy-infrastructure:
     docker:
@@ -216,12 +201,9 @@ jobs:
             - project/.circleci/ansible/inventory.txt
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   configure-infrastructure:
     docker:
@@ -247,12 +229,9 @@ jobs:
           no_output_timeout: 30m
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   run-migrations:
     docker:
@@ -280,12 +259,9 @@ jobs:
             fi
       - destroy-environment:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   deploy-frontend:
     docker:
@@ -326,12 +302,9 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
                     
   deploy-backend:
     docker:
@@ -386,12 +359,9 @@ jobs:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
           workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   smoke-test:
     docker:
@@ -439,12 +409,9 @@ jobs:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   cloudfront-update:
     docker:
@@ -477,12 +444,9 @@ jobs:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
       - revert-migrations:
             workflow_id: ${CIRCLE_WORKFLOW_ID:0:7}
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
 
   cleanup:
     docker:
@@ -518,42 +482,53 @@ jobs:
             else
               echo "Stack is the latest"
             fi
-      - failure_notify:
-          context: slack
-      - success_notify:
-          context: slack
-      - deploy_notify:
-          context: slack
+      - failure_notify
+      - success_notify
+      - deploy_notify
             
 workflows:
   default:
     jobs:
-      - build-frontend
-      - build-backend
+      - build-frontend:
+          context: slack
+      - build-backend:
+          context: slack
       - test-frontend:
+          context: slack
           requires: [build-frontend]
       - test-backend:
+          context: slack
           requires: [build-backend]
       - scan-backend:
+          context: slack
           requires: [build-backend]
       - scan-frontend:
+          context: slack
           requires: [build-frontend]
       - deploy-infrastructure:
+          context: slack
           requires: [test-frontend, test-backend, scan-frontend, scan-backend]
           filters:
             branches:
               only: [master]
       - configure-infrastructure:
+          context: slack
           requires: [deploy-infrastructure]
       - run-migrations:
+          context: slack
           requires: [configure-infrastructure]
       - deploy-frontend:
+          context: slack
           requires: [run-migrations]
       - deploy-backend:
+          context: slack
           requires: [run-migrations]
       - smoke-test:
+          context: slack
           requires: [deploy-backend, deploy-frontend]
       - cloudfront-update:
+          context: slack
           requires: [smoke-test]
       - cleanup:
+          context: slack
           requires: [cloudfront-update]
