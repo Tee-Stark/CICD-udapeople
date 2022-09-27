@@ -1,8 +1,10 @@
 # Application with auto-deployment capabilities - UDAPEOPLE
+
 In this project, I setup a CI/CD pipeline to auto-deploy a React/Nestjs application to AWS using CircleCi and Ansible. I configure alerts to a slack channel to notify the team on successful or failed builds.
 I also configure Prometheus as a tool for logging and monitoring, with alert-manager on the side to send critical alert errors to my email.
 
 ### Working Application UI
+
 ![Udapeople UI](./img/Working_Application.png)
 
 ### Relevant links (temporary):
@@ -10,6 +12,7 @@ I also configure Prometheus as a tool for logging and monitoring, with alert-man
 - Production Frontend URL: [http://d1ay69k43k8yae.cloudfront.net](http://d1ay69k43k8yae.cloudfront.net)
 - Backend URL: [http://ec2-52-90-173-48.compute-1.amazonaws.com:3030](http://ec2-52-90-173-48.compute-1.amazonaws.com:3030)
 - Prometheus Dashboard: [http://ec2-18-234-128-93.compute-1.amazonaws.com:9090](http://ec2-18-234-128-93.compute-1.amazonaws.com:9090/)
+- Video demonstration of working application: [https://www.loom.com/share/5451622a6ac24a73bb47bdcda7c412be](https://www.loom.com/share/5451622a6ac24a73bb47bdcda7c412be)
 
 ### Built With
 
