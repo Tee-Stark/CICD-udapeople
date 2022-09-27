@@ -1,2 +1,2 @@
-URL01 = 
+URL01 = https://github.com/Tee-Stark/CICD-udapeople
 URL02 = http://udapeople-fa6a9ce.s3-website-us-east-1.amazonaws.com/
